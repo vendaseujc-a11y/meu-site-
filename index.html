@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santa Fé do Sul - Encontre Lugares</title>
+    <title>Encontre Lugares</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -48,6 +48,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+        }
+
+        .header-logo {
+            max-width: 350px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            filter: drop-shadow(0 0 30px rgba(0, 217, 255, 0.6));
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.4));
+            }
+            to {
+                filter: drop-shadow(0 0 40px rgba(0, 217, 255, 0.8));
+            }
+        }
             text-align: center;
         }
 
@@ -353,7 +373,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="logo.jpg" alt="Logo" style="max-width: 200px;">
+            <img src="logo.jpg" alt="Logo" class="header-logo">
         </header>
 
         <div class="search-box">
