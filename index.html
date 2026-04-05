@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Encontre Lugares</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -340,6 +340,102 @@
         @media (max-width: 768px) {
             .advertising {
                 grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+
+            .container {
+                padding: 10px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            header {
+                padding: 20px 10px;
+                min-height: auto;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header-logo {
+                max-width: 150px;
+            }
+
+            .header-text-left, .header-text-right {
+                font-size: 1.2rem;
+            }
+
+            .search-box {
+                padding: 15px;
+            }
+
+            .search-input-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-input-group input {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 16px;
+            }
+
+            .search-input-group button {
+                width: 100%;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .categories {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .category-btn {
+                padding: 10px 5px;
+                font-size: 0.8rem;
+            }
+
+            .category-btn span {
+                font-size: 1rem;
+            }
+
+            #map-container {
+                height: 300px;
+                border-radius: 10px;
+            }
+
+            .results-list {
+                padding: 10px;
+                max-height: 300px;
+            }
+
+            .result-item {
+                padding: 10px;
+            }
+
+            footer {
+                padding: 15px;
+                font-size: 0.8rem;
+            }
+
+            .advertising {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .ad-space {
+                min-height: 80px;
             }
         }
 
