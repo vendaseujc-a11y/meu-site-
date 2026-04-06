@@ -478,9 +478,134 @@
             border-radius: 10px;
             display: block;
         }
+
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .tutorial-overlay.hidden {
+            display: none;
+        }
+
+        .tutorial-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(0, 217, 255, 0.5);
+            box-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
+        }
+
+        .tutorial-box h2 {
+            color: #00d9ff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .tutorial-box h3 {
+            color: #00ff88;
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .tutorial-box p {
+            color: #ddd;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .tutorial-box ul {
+            margin-left: 20px;
+            color: #ddd;
+        }
+
+        .tutorial-box li {
+            margin-bottom: 8px;
+        }
+
+        .tutorial-close {
+            display: block;
+            width: 100%;
+            padding: 15px 30px;
+            margin-top: 20px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 50px;
+            color: #1a1a2e;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .tutorial-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
+    <div class="tutorial-overlay" id="tutorialOverlay">
+        <div class="tutorial-box">
+            <h2>📍 Bem-vindo ao Guia Local!</h2>
+            
+            <h3>🎯 O que é este site?</h3>
+            <p>Este é um guia de locais e serviços de Santa Fé do Sul. Aqui você pode encontrar facilmente:</p>
+            <ul>
+                <li>Hospitais, farmácias e postos de saúde</li>
+                <li>Restaurantes, pizzarias, bares e lanchonetes</li>
+                <li>Supermercados, açougues e conveniências</li>
+                <li>Hotéis, pontos turísticos e praias</li>
+                <li>Bancos, empresas e comércios em geral</li>
+            </ul>
+
+            <h3>🔍 Como buscar um lugar?</h3>
+            <p><strong>1.</strong> Digite o que procura no campo de busca (ex: "pizzaria", "farmácia")</p>
+            <p><strong>2.</strong> Clique no botão "Buscar" ou pressione Enter</p>
+            <p><strong>3.</strong> Veja os resultados na lista e no mapa</p>
+
+            <h3>📋 Como usar as categorias?</h3>
+            <p>Clique nos botões de categoria para filtrar os resultados:</p>
+            <ul>
+                <li>🏥 Hospitais</li>
+                <li>🛒 Supermercados</li>
+                <li>🏦 Bancos</li>
+                <li>🍕 Pizzarias</li>
+                <li>🏨 Hotéis</li>
+                <li>E muitas outras...</li>
+            </ul>
+
+            <h3>🗺️ O mapa</h3>
+            <p>O mapa mostra a localização dos lugares encontrados. Clique em um resultado para ver no Google Maps.</p>
+
+            <h3>🤝 Parceiros</h3>
+            <p>A seção "Parceiros" mostra os estabelecimentos parceiros do guia. Clique neles para mais informações.</p>
+
+            <button class="tutorial-close" onclick="closeTutorial()">Começar a usar o site →</button>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <div class="header-content">
@@ -651,6 +776,15 @@
                 searchPlaces();
             }
         });
+
+        function closeTutorial() {
+            document.getElementById('tutorialOverlay').classList.add('hidden');
+            localStorage.setItem('tutorialVisto', 'true');
+        }
+
+        if (localStorage.getItem('tutorialVisto') === 'true') {
+            document.getElementById('tutorialOverlay').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
