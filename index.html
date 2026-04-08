@@ -579,7 +579,10 @@
                 <button class="category-btn" onclick="searchCategory('advocacia')"><span>⚖️</span> Advocacia</button>
                 <button class="category-btn" onclick="searchCategory('veterinária')"><span>🐾</span> Veterinária</button>
                 <button class="category-btn" onclick="searchCategory('personal trainer')"><span>💪</span> Personal Trainer</button>
+                <button class="category-btn" onclick="searchCategory('moto taxi')"><span>🏍️</span> Moto Táxi</button>
                 <button class="category-btn" onclick="searchCategory('xerox e papelaria')"><span>📄</span> Xerox e Papelaria</button>
+                <button class="category-btn" style="background: linear-gradient(90deg, #f5a623, #f8b500); border-color: #f5a623;" onclick="openTaxi()"><span>🚕</span> Chamar Taxi</button>
+                <button class="category-btn" style="background: linear-gradient(90deg, #e74c3c, #c0392b); border-color: #e74c3c;" onclick="openMotoTaxi()"><span>🏍️</span> Chamar Moto Táxi</button>
             </div>
         </div>
 
@@ -674,6 +677,18 @@
         function openInGoogleMaps(query) {
             const encodedQuery = encodeURIComponent(`${query}, Santa Fé do Sul, São Paulo, Brasil`);
             window.open(`https://www.google.com/maps/search/${encodedQuery}`, '_blank');
+        }
+
+        function openUber() {
+            window.open('https://m.uber.com/', '_blank');
+        }
+
+        function openTaxi() {
+            window.open('https://www.google.com/maps/search/taxi+Santa+F%C3%A9+do+Sul+SP', '_blank');
+        }
+
+        function openMotoTaxi() {
+            window.open('https://www.google.com/maps/search/moto+taxi+Santa+F%C3%A9+do+Sul+SP', '_blank');
         }
 
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
