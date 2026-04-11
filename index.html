@@ -557,6 +557,9 @@
                 <input type="text" id="searchInput" placeholder="O que você procura? (bar, hotel, restaurante, ...)">
                 <button onclick="searchPlaces()">Buscar</button>
             </div>
+            <div id="searchMessage" style="text-align: center; margin-top: 15px; color: #00ff88; font-size: 1rem; display: none;">
+                Resultado abaixo no link verde
+            </div>
             <div class="categories">
                 <button class="category-btn" onclick="searchCategory('hospital')"><span>🏥</span> Hospitais</button>
                 <button class="category-btn" onclick="searchCategory('supermercado')"><span>🛒</span> Supermercados</button>
@@ -640,6 +643,7 @@
                 return;
             }
 
+            document.getElementById('searchMessage').style.display = 'block';
             currentQuery = searchQuery;
             updateMap(searchQuery);
             displayResults(searchQuery);
