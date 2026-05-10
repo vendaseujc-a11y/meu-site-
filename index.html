@@ -535,6 +535,53 @@
             font-size: 2rem;
             margin-right: 10px;
         }
+
+        .results-grid {
+            background: rgba(0, 40, 60, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 115, 140, 0.3);
+        }
+
+        .results-grid-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .result-card {
+            background: rgba(0, 60, 80, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            text-align: center;
+        }
+
+        .result-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .result-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .result-card h3 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .result-card p {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
@@ -593,6 +640,12 @@
             </div>
             <div id="searchMessage" style="text-align: center; margin-top: 15px; color: #00ff88; font-size: 1rem; display: none;">
                 Resultado abaixo no link verde
+            </div>
+            <div id="results-grid" class="results-grid" style="display: none;">
+                <div class="results-grid-header">
+                    <h2 style="color: #00d9ff; font-size: 1.3rem; margin-bottom: 15px;">Resultados da busca</h2>
+                </div>
+                <div id="results-grid-content" class="results-grid-content"></div>
             </div>
             <div class="categories">
                 <button class="category-btn" onclick="searchCategory('hospital')"><span>🏥</span> Hospitais</button>
@@ -707,10 +760,38 @@
         }
 
         function displayResults(query) {
+            const resultsGrid = document.getElementById('results-grid');
+            const resultsGridContent = document.getElementById('results-grid-content');
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '<div class="loading">Buscando locais...</div>';
+            
+            resultsGrid.style.display = 'block';
+            resultsGridContent.innerHTML = '<div class="loading" style="text-align: center; padding: 20px; color: #00d9ff;">Buscando locais...</div>';
             
             setTimeout(() => {
+                const icons = ['📍', '🏪', '🍽️', '🏨', '🏥', '🛒', '⛽', '💊'];
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                
+                resultsGridContent.innerHTML = `
+                    <div class="result-card" onclick="openInGoogleMaps('${query}')">
+                        <div class="result-card-icon">${randomIcon}</div>
+                        <h3>${query}</h3>
+                        <p>Santa Fé do Sul, SP</p>
+                        <p style="color: #00ff88; font-size: 0.8rem; margin-top: 8px;">Ver no mapa →</p>
+                    </div>
+                    <div class="result-card" onclick="openInGoogleMaps('${query} próximo')">
+                        <div class="result-card-icon">📍</div>
+                        <h3>${query} próximo</h3>
+                        <p>Próximos resultados</p>
+                        <p style="color: #00ff88; font-size: 0.8rem; margin-top: 8px;">Ver no mapa →</p>
+                    </div>
+                    <div class="result-card" onclick="openInGoogleMaps('${query} Santa Fé do Sul')">
+                        <div class="result-card-icon">🗺️</div>
+                        <h3>${query} na região</h3>
+                        <p>Toda a cidade</p>
+                        <p style="color: #00ff88; font-size: 0.8rem; margin-top: 8px;">Ver no mapa →</p>
+                    </div>
+                `;
+                
                 resultsDiv.innerHTML = `
                     <div class="result-item" onclick="openInGoogleMaps('${query}')">
                         <h3>🔍 ${query}</h3>
