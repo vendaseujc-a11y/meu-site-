@@ -3,731 +3,1087 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Encontre Lugares</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Guia Local - Santa Fé do Sul</title>
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+            --primary: #00f2fe;
+            --primary-rgb: 0, 242, 254;
+            --secondary: #4facfe;
+            --accent: #10b981;
+            --accent-rgb: 16, 185, 129;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-focus: rgba(0, 242, 254, 0.15);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #00738C 0%, #005a6e 100%);
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+            background-color: #020617;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
             min-height: 100vh;
-            color: #fff;
-            position: relative;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 115, 140, 0.3) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .logo-container {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        header {
-            position: relative;
-            padding: 20px;
-            min-height: 250px;
+        /* App Shell - simulates a native mobile app on desktop and occupies full screen on mobile */
+        .app-shell {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            border-right: 1px solid var(--glass-border);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 100%;
-        }
-
-        .header-logo {
-            max-width: 100%;
-            width: 100%;
-            max-height: 220px;
-            height: auto;
             position: relative;
-            z-index: 10;
-            object-fit: contain;
-        }
-
-        .instagram-link {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #00d9ff;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .instagram-link:hover {
-            color: #00ff88;
-            text-decoration: underline;
-        }
-
-        .partner-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 25px;
-            background: linear-gradient(90deg, #00d9ff, #00ff88);
-            color: #1a1a2e;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .partner-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
-        }
-            line-height: 1.3;
-            margin-top: 5px;
-            color: #00d9ff;
-            text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
-            letter-spacing: 1px;
-        }
-
-        header p {
-            color: #a0a0a0;
-            font-size: 1.1rem;
-            text-align: left;
-        }
-
-        .discover {
-            margin-top: 10px;
-            color: #00d9ff !important;
-            font-weight: 500;
-        }
-
-        .search-box {
-            background: rgba(0, 40, 60, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(0, 115, 140, 0.3);
-        }
-
-        .search-input-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .search-input-group input {
-            flex: 1;
-            min-width: 250px;
-            padding: 15px 20px;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .search-input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .search-input-group input:focus {
-            outline: none;
-            border-color: #00d9ff;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .search-input-group button {
-            padding: 15px 35px;
-            border-radius: 50px;
-            border: none;
-            background: linear-gradient(90deg, #00d9ff, #00ff88);
-            color: #1a1a2e;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .search-input-group button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
-        }
-
-        .categories {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .category-btn {
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            background: transparent;
-            color: #fff;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .category-btn:hover, .category-btn.active {
-            background: linear-gradient(90deg, #00d9ff, #00ff88);
-            border-color: transparent;
-            color: #1a1a2e;
-        }
-
-        .category-btn span {
-            font-size: 1.2rem;
-        }
-
-        .content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
-
-        @media (max-width: 900px) {
-            .content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .results-list {
-            background: rgba(0, 40, 60, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(0, 115, 140, 0.3);
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .results-list h2 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #00d9ff;
-        }
-
-        .result-item {
-            padding: 15px;
-            background: rgba(0, 60, 80, 0.5);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .result-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(0, 217, 255, 0.3);
-        }
-
-        .result-item h3 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .result-item p {
-            color: #a0a0a0;
-            font-size: 0.9rem;
-        }
-
-        .result-item .distance {
-            color: #00ff88;
-            font-size: 0.85rem;
-            margin-top: 8px;
-        }
-
-        #map-container {
-            position: relative;
-            height: 500px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 115, 140, 0.3);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
             overflow: hidden;
         }
 
-        #map-frame {
-            width: 100%;
-            height: 100%;
+        /* Top Header */
+        header {
+            padding: 18px 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            height: 38px;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+        }
+
+        .brand-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .partner-action-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .partner-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Main Content Scroll Area */
+        .app-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 20px 90px 20px; /* space at bottom for floating tab bar */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .app-body::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        /* App Navigation Screen Switching */
+        .app-screen {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .app-screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Welcome & Greetings Banner */
+        .greetings-card {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.1) 0%, rgba(79, 172, 254, 0.05) 100%);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .greetings-card::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, transparent 70%);
+            top: -50px;
+            right: -50px;
+            pointer-events: none;
+        }
+
+        .greetings-card h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .greetings-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Search Section */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 4px 6px 4px 16px;
+            transition: all 0.3s;
+        }
+
+        .search-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--glass-focus);
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            background: transparent;
             border: none;
+            outline: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: inherit;
+            padding: 10px 0;
         }
 
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: #a0a0a0;
+        .search-wrapper input::placeholder {
+            color: #64748b;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #00d9ff;
+        .search-wrapper button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            outline: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 242, 254, 0.2);
         }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #a0a0a0;
-            font-size: 0.9rem;
+        .search-wrapper button:active {
+            transform: scale(0.95);
         }
 
-        .advertising {
+        .search-wrapper button svg {
+            fill: #020617;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Categories Ribbon */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-header h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .categories-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 30px;
+            gap: 10px;
+            margin-bottom: 24px;
         }
 
-        @media (max-width: 768px) {
-            .advertising {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                min-height: 100vh;
-                overflow-x: hidden;
-            }
-
-            .container {
-                padding: 10px;
-                width: 100%;
-                max-width: 100%;
-            }
-
-            header {
-                padding: 20px 10px;
-                min-height: 180px;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .header-logo {
-                max-width: 200px;
-                width: 100%;
-            }
-
-            .header-text-left, .header-text-right {
-                font-size: 1.2rem;
-            }
-
-            .search-box {
-                padding: 15px;
-            }
-
-            .search-input-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .search-input-group input {
-                width: 100%;
-                padding: 12px 15px;
-                font-size: 16px;
-            }
-
-            .search-input-group button {
-                width: 100%;
-                padding: 12px;
-                font-size: 16px;
-            }
-
-            .categories {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-
-            .category-btn {
-                padding: 10px 5px;
-                font-size: 0.8rem;
-            }
-
-            .category-btn span {
-                font-size: 1rem;
-            }
-
-            #map-container {
-                height: 300px;
-                border-radius: 10px;
-            }
-
-            .results-list {
-                padding: 10px;
-                max-height: 300px;
-            }
-
-            .result-item {
-                padding: 10px;
-            }
-
-            footer {
-                padding: 15px;
-                font-size: 0.8rem;
-            }
-
-            .advertising {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .ad-space {
-                min-height: 150px;
-                display: flex;
-            }
-        }
-
-        .ad-space {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            min-height: 100px;
+        .category-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 12px 6px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .category-item:hover, .category-item.active {
+            border-color: var(--primary);
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+        }
+
+        .category-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
             overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
         }
 
-        .ad-space:hover {
-            border-color: #00d9ff;
+        /* Quick Transport Services Link */
+        .quick-services {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 24px;
         }
 
-        .ad-space h4 {
-            color: #a0a0a0;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .services-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .ad-space p {
-            color: #666;
+        .service-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .service-icon {
+            font-size: 1.3rem;
+        }
+
+        .service-name {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Search Results Container */
+        .results-container {
+            margin-bottom: 20px;
+        }
+
+        .results-status {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
             font-size: 0.85rem;
         }
 
-        .ad-space img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            display: block;
+        .result-card-premium {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.3s ease-out;
         }
 
+        .result-card-premium:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 242, 254, 0.1);
+        }
+
+        .result-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            background: rgba(79, 172, 254, 0.15);
+            color: var(--secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .result-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .result-meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .result-rating {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: rgba(250, 204, 21, 0.1);
+            color: #facc15;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.7rem;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .action-icon-btn {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .action-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .action-icon-btn.primary-btn {
+            background: rgba(0, 242, 254, 0.1);
+            border-color: rgba(0, 242, 254, 0.25);
+            color: var(--primary);
+        }
+
+        .action-icon-btn.primary-btn:hover {
+            background: rgba(0, 242, 254, 0.18);
+        }
+
+        /* Maps Page Layout */
+        .map-wrapper {
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            height: 380px;
+            margin-bottom: 16px;
+            position: relative;
+            box-shadow: var(--card-shadow);
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-info-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .map-info-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .map-info-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Partners Screen (Vitrine) */
+        .partners-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .partner-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .partner-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .partner-img-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            height: 140px;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .partner-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+
+        .partner-card:hover .partner-img-wrapper img {
+            transform: scale(1.04);
+        }
+
+        .partner-info {
+            padding: 0 4px;
+        }
+
+        .partner-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .partner-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* About Screen */
+        .about-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 24px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .about-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            margin: 0 auto 16px auto;
+            display: block;
+            box-shadow: 0 8px 24px rgba(0, 242, 254, 0.2);
+        }
+
+        .about-card h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .about-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+            transition: all 0.3s;
+        }
+
+        .instagram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.45);
+        }
+
+        .tutorial-reopen-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .tutorial-reopen-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Bottom Tab Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 10px;
+            z-index: 20;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 6px;
+            width: 60px;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.35rem;
+            transition: transform 0.2s;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .nav-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        /* Tutorial Modal Overlay */
         .tutorial-overlay {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .tutorial-overlay.hidden {
-            display: none;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .tutorial-box {
-            background: linear-gradient(135deg, #00738C 0%, #005a6e 100%);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 600px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 24px;
+            padding: 24px;
+            max-width: 400px;
             width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 2px solid rgba(0, 115, 140, 0.5);
-            box-shadow: 0 0 40px rgba(0, 115, 140, 0.3);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            box-shadow: 0 10px 40px rgba(0, 242, 254, 0.15);
+            animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes modalScale {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .tutorial-box h2 {
-            color: #00d9ff;
+            color: var(--primary);
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 12px;
+            font-size: 1.35rem;
+            font-weight: 800;
         }
 
         .tutorial-box h3 {
-            color: #00ff88;
-            margin: 20px 0 10px 0;
-            font-size: 1.1rem;
-            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
-            padding-bottom: 5px;
+            color: var(--accent);
+            margin: 14px 0 6px 0;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+            padding-bottom: 4px;
         }
 
         .tutorial-box p {
-            color: #ddd;
-            margin-bottom: 10px;
-            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-size: 0.8rem;
         }
 
         .tutorial-box ul {
-            margin-left: 20px;
-            color: #ddd;
+            margin-left: 16px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
 
         .tutorial-box li {
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .tutorial-close {
             display: block;
             width: 100%;
-            padding: 15px 30px;
+            padding: 12px;
             margin-top: 20px;
-            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
-            border-radius: 50px;
-            color: #1a1a2e;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 12px;
+            color: #020617;
+            font-size: 0.9rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .tutorial-close:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
         }
 
-        .tutorial-icon {
-            font-size: 2rem;
-            margin-right: 10px;
-        }
-
-        .results-grid {
-            background: rgba(0, 40, 60, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(0, 115, 140, 0.3);
-        }
-
-        .results-grid-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .result-card {
-            background: rgba(0, 60, 80, 0.5);
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            text-align: center;
-        }
-
-        .result-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(0, 217, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .result-card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .result-card h3 {
-            font-size: 1rem;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .result-card p {
-            color: #a0a0a0;
-            font-size: 0.85rem;
+        @media (max-width: 480px) {
+            body {
+                background-image: none;
+                background-color: #020617;
+            }
+            .app-shell {
+                max-width: 100%;
+                height: 100vh;
+                border: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="tutorial-overlay" id="tutorialOverlay">
-        <div class="tutorial-box">
-            <h2>📍 Bem-vindo ao Guia Local de Santa Fé do Sul!</h2>
-            
-            <h3>🎯 O que é este site?</h3>
-            <p>Este é um guia de locais e serviços de Santa Fé do Sul. Aqui você pode encontrar facilmente:</p>
-            <ul>
-                <li>Hospitais, farmácias e postos de saúde</li>
-                <li>Restaurantes, pizzarias, bares e lanchonetes</li>
-                <li>Supermercados, açougues e conveniências</li>
-                <li>Hotéis, pontos turísticos e praias</li>
-                <li>Bancos, empresas e comércios em geral</li>
-            </ul>
 
-            <h3>🔍 Como buscar um lugar?</h3>
-            <p><strong>1.</strong> Digite o que procura no campo de busca (ex: "pizzaria", "farmácia")</p>
-            <p><strong>2.</strong> Clique no botão "Buscar" ou pressione Enter</p>
-            <p><strong>3.</strong> Veja os resultados na lista e no mapa</p>
-
-            <h3>📋 Como usar as categorias?</h3>
-            <p>Clique nos botões de categoria para filtrar os resultados:</p>
-            <ul>
-                <li>🏥 Hospitais</li>
-                <li>🛒 Supermercados</li>
-                <li>🏦 Bancos</li>
-                <li>🍕 Pizzarias</li>
-                <li>🏨 Hotéis</li>
-                <li>E muitas outras...</li>
-            </ul>
-
-            <h3>🗺️ O mapa</h3>
-            <p>O mapa mostra a localização dos lugares encontrados. Clique em um resultado para ver no Google Maps.</p>
-
-            <h3>🤝 Parceiros</h3>
-            <p>A seção "Parceiros" mostra os estabelecimentos parceiros do guia. Clique neles para mais informações.</p>
-
-            <button class="tutorial-close" onclick="closeTutorial()">Começar a usar o site →</button>
-        </div>
-    </div>
-
-    <div class="container">
+    <div class="app-shell">
+        <!-- Top Navigation Bar -->
         <header>
-            <div class="header-content">
-                <img src="logo1.png" alt="Logo" class="header-logo">
-                <a href="https://wa.me/message/FK22NAQD3VGQE1" target="_blank" class="partner-btn">Seja um parceiro</a>
+            <div class="brand">
+                <img src="logo1.png" alt="Guia Local">
+                <span class="brand-text">Guia Local</span>
             </div>
+            <a href="https://wa.me/message/FK22NAQD3VGQE1" target="_blank" class="partner-action-btn">
+                Seja Parceiro 🤝
+            </a>
         </header>
 
-        <div class="search-box">
-            <div class="search-input-group">
-                <input type="text" id="searchInput" placeholder="O que você procura? (bar, hotel, restaurante, ...)">
-                <button onclick="searchPlaces()">Buscar</button>
-            </div>
-            <div id="searchMessage" style="text-align: center; margin-top: 15px; color: #00ff88; font-size: 1rem; display: none;">
-                Resultado abaixo no link verde
-            </div>
-            <div id="results-grid" class="results-grid" style="display: none;">
-                <div class="results-grid-header">
-                    <h2 style="color: #00d9ff; font-size: 1.3rem; margin-bottom: 15px;">Resultados da busca</h2>
+        <!-- Dynamic Body Pages -->
+        <div class="app-body">
+            
+            <!-- SCREEN 1: HOME -->
+            <div id="screen-home" class="app-screen active">
+                <div class="greetings-card">
+                    <h1>Descubra o melhor da cidade</h1>
+                    <p>Encontre de forma prática comércios, pontos turísticos, serviços e locais em Santa Fé do Sul, SP.</p>
                 </div>
-                <div id="results-grid-content" class="results-grid-content"></div>
-            </div>
-            <div class="categories">
-                <button class="category-btn" onclick="searchCategory('hospital')"><span>🏥</span> Hospitais</button>
-                <button class="category-btn" onclick="searchCategory('supermercado')"><span>🛒</span> Supermercados</button>
-                <button class="category-btn" onclick="searchCategory('banco')"><span>🏦</span> Bancos</button>
-                <button class="category-btn" onclick="searchCategory('pizzaria')"><span>🍕</span> Pizzarias</button>
-                <button class="category-btn" onclick="searchCategory('imobiliária')"><span>🏠</span> Imobiliárias</button>
-                <button class="category-btn" onclick="searchCategory('conveniência')"><span>🏪</span> Conveniências</button>
-                <button class="category-btn" onclick="searchCategory('açougue')"><span>🥩</span> Açougues</button>
-                <button class="category-btn" onclick="searchCategory('rancho')"><span>🌾</span> Ranchos</button>
-                <button class="category-btn" onclick="searchCategory('bar')"><span>🍺</span> Bares</button>
-                <button class="category-btn" onclick="searchCategory('hotel')"><span>🏨</span> Hotéis</button>
-                <button class="category-btn" onclick="searchCategory('restaurant')"><span>🍽️</span> Restaurantes</button>
-                <button class="category-btn" onclick="searchCategory('lanchonete')"><span>🍔</span> Lanchonetes</button>
-                <button class="category-btn" onclick="searchCategory('pontos turísticos')"><span>🎭</span> Pontos Turísticos</button>
-                <button class="category-btn" onclick="searchCategory('farmácia')"><span>💊</span> Farmácias</button>
-                <button class="category-btn" onclick="searchCategory('posto combustível')"><span>⛽</span> Postos</button>
-                <button class="category-btn" onclick="searchCategory('praia')"><span>🏖️</span> Praias</button>
-                <button class="category-btn" onclick="searchCategory('empresa')"><span>🏢</span> Empresas</button>
-                <button class="category-btn" onclick="searchCategory('academia')"><span>🏋️</span> Academias</button>
-                <button class="category-btn" onclick="searchCategory('loja')"><span>🛍️</span> Loja de Comércio</button>
-                <button class="category-btn" onclick="searchCategory('advocacia')"><span>⚖️</span> Advocacia</button>
-                <button class="category-btn" onclick="searchCategory('veterinária')"><span>🐾</span> Veterinária</button>
-                <button class="category-btn" onclick="searchCategory('personal trainer')"><span>💪</span> Personal Trainer</button>
-                <button class="category-btn" onclick="searchCategory('moto taxi')"><span>🏍️</span> Moto Táxi</button>
-                <button class="category-btn" onclick="searchCategory('xerox e papelaria')"><span>📄</span> Xerox e Papelaria</button>
-            </div>
-        </div>
 
-        <div class="content">
-            <div class="results-list">
-                <h2>Resultados</h2>
-                <div id="results">
-                    <div class="no-results">
-                        <p>Digite o que procura ou clique em uma categoria acima</p>
+                <!-- Search Input Bar -->
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="searchInput" placeholder="O que você procura hoje? (pizza, hotel...)">
+                        <button onclick="searchPlaces()" aria-label="Buscar">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Categories Grid -->
+                <div class="section-header">
+                    <h3>Categorias Populares</h3>
+                </div>
+                <div class="categories-grid">
+                    <div class="category-item" onclick="searchCategory('hospital')">
+                        <span class="category-icon">🏥</span>
+                        <span class="category-label">Hospitais</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('supermercado')">
+                        <span class="category-icon">🛒</span>
+                        <span class="category-label">Mercados</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('pizzaria')">
+                        <span class="category-icon">🍕</span>
+                        <span class="category-label">Pizzas</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('hotel')">
+                        <span class="category-icon">🏨</span>
+                        <span class="category-label">Hotéis</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('posto combustível')">
+                        <span class="category-icon">⛽</span>
+                        <span class="category-label">Postos</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('restaurant')">
+                        <span class="category-icon">🍽️</span>
+                        <span class="category-label">Restaurante</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('praia')">
+                        <span class="category-icon">🏖️</span>
+                        <span class="category-label">Praias</span>
+                    </div>
+                    <div class="category-item" onclick="searchCategory('farmácia')">
+                        <span class="category-icon">💊</span>
+                        <span class="category-label">Farmácias</span>
+                    </div>
+                </div>
+
+                <!-- Quick transport Services -->
+                <div class="quick-services">
+                    <div class="section-header" style="margin-bottom: 4px;">
+                        <h3 style="font-size: 0.85rem; color: #fff;">Chamar Transporte</h3>
+                    </div>
+                    <div class="services-row">
+                        <a href="#" onclick="openUber()" class="service-card">
+                            <span class="service-icon">🚗</span>
+                            <span class="service-name">Uber App</span>
+                        </a>
+                        <a href="#" onclick="openMotoTaxi()" class="service-card">
+                            <span class="service-icon">🏍️</span>
+                            <span class="service-name">Moto Táxi</span>
+                        </a>
+                        <a href="#" onclick="openTaxi()" class="service-card">
+                            <span class="service-icon">🚕</span>
+                            <span class="service-name">Pedir Táxi</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Live Results Area -->
+                <div class="section-header">
+                    <h3 id="results-title-header">Resultados</h3>
+                </div>
+                <div class="results-container" id="results-list">
+                    <div class="results-status">
+                        Digite um termo acima ou escolha uma categoria para explorar os locais.
                     </div>
                 </div>
             </div>
-            <div id="map-container">
-                <iframe id="map-frame" 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29785.58743109234!2d-50.7453!3d-20.1072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x949097b5c8974855%3A0x4c2d2f8c1c8e4e8!2sSanta%20F%C3%A9%20do%20Sul%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1640000000000!5m2!1spt-BR!2sbr"
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+
+            <!-- SCREEN 2: MAP -->
+            <div id="screen-map" class="app-screen">
+                <div class="section-header">
+                    <h3>Mapa Santa Fé do Sul</h3>
+                </div>
+                
+                <div class="map-wrapper">
+                    <iframe id="map-frame" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29785.58743109234!2d-50.7453!3d-20.1072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x949097b5c8974855%3A0x4c2d2f8c1c8e4e8!2sSanta%20F%C3%A9%20do%20Sul%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1640000000000!5m2!1spt-BR!2sbr"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="map-info-card">
+                    <h4>Navegação Interativa</h4>
+                    <p>O mapa atualiza dinamicamente conforme suas buscas no app. Toque nos locais para traçar rotas e ver informações diretamente na plataforma do Google Maps.</p>
+                </div>
+            </div>
+
+            <!-- SCREEN 3: PARTNERS -->
+            <div id="screen-partners" class="app-screen">
+                <div class="section-header">
+                    <h3>Parceiros em Destaque</h3>
+                </div>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-img-wrapper">
+                            <img src="parceiro 1.jpg" alt="Parceiro 1">
+                        </div>
+                        <div class="partner-info">
+                            <h4 class="partner-title">Estabelecimento Parceiro</h4>
+                            <p class="partner-desc">Destaque comercial local na cidade de Santa Fé do Sul.</p>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-img-wrapper">
+                            <img src="parceiro22.jpg" alt="Parceiro 2">
+                        </div>
+                        <div class="partner-info">
+                            <h4 class="partner-title">Serviço Recomendado</h4>
+                            <p class="partner-desc">Os melhores profissionais prontos para atender a sua necessidade.</p>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-img-wrapper">
+                            <img src="banner3.png" alt="Parceiro 3">
+                        </div>
+                        <div class="partner-info">
+                            <h4 class="partner-title">Anunciante Oficial</h4>
+                            <p class="partner-desc">Soluções integradas e atendimento personalizado com excelência.</p>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-img-wrapper">
+                            <img src="vni3.png" alt="Parceiro 5">
+                        </div>
+                        <div class="partner-info">
+                            <h4 class="partner-title">Comércio Destaque</h4>
+                            <p class="partner-desc">Produtos de extrema qualidade e com os melhores descontos do guia.</p>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-img-wrapper">
+                            <img src="parceiro6.png" alt="Parceiro 6">
+                        </div>
+                        <div class="partner-info">
+                            <h4 class="partner-title">Destaque Premium</h4>
+                            <p class="partner-desc">Conheça o local ideal na cidade, avaliado com excelência.</p>
+                        </div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-img-wrapper">
+                            <img src="parceiro7.png" alt="Parceiro 7">
+                        </div>
+                        <div class="partner-info">
+                            <h4 class="partner-title">Parceiro VIP</h4>
+                            <p class="partner-desc">Os melhores parceiros integrados com total comodidade e confiança.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCREEN 4: ABOUT -->
+            <div id="screen-about" class="app-screen">
+                <div class="about-card">
+                    <img src="logo1.png" alt="Logo" class="about-logo">
+                    <h2>Guia Local</h2>
+                    <p>O Guia Local de Santa Fé do Sul é a solução ideal para encontrar serviços, empresas, entretenimento e saúde pública pertinho de você.</p>
+                    <a href="https://www.instagram.com/lugares.santafedosul/" target="_blank" class="instagram-btn">
+                        <span>📸 Seguir no Instagram</span>
+                    </a>
+                </div>
+
+                <div class="about-card" style="padding: 20px;">
+                    <h3 style="font-size: 1rem; margin-bottom: 8px;">Dúvidas de Uso</h3>
+                    <p style="margin-bottom: 14px;">Gostaria de ver o guia passo a passo inicial de como usar o aplicativo novamente?</p>
+                    <button onclick="reopenTutorial()" class="tutorial-reopen-btn">Abrir Guia Inicial</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Floating Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('home')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Início</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('map')">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-label">Mapa</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('partners')">
+                <span class="nav-icon">🤝</span>
+                <span class="nav-label">Parceiros</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('about')">
+                <span class="nav-icon">ℹ️</span>
+                <span class="nav-label">Sobre</span>
+            </button>
+        </nav>
+
+        <!-- Animated Welcome Tutorial Overlay -->
+        <div class="tutorial-overlay" id="tutorialOverlay">
+            <div class="tutorial-box">
+                <h2>📍 Bem-vindo ao Guia de Santa Fé do Sul!</h2>
+                
+                <h3>🎯 Nosso Objetivo</h3>
+                <p>Facilitar a busca por hospitais, restaurantes, supermercados, hotéis e muito mais na região de Santa Fé do Sul!</p>
+                
+                <h3>🔍 Como Buscar</h3>
+                <p>1. Digite a sua busca no campo principal ou utilize os botões de categorias sugeridas.</p>
+                <p>2. Navegue pelos resultados e toque para visualizar rotas ou ligar instantaneamente.</p>
+
+                <h3>🤝 Quer anuncar?</h3>
+                <p>Toque em <strong>"Seja Parceiro"</strong> no topo para falar conosco e ter o seu comércio na nossa vitrine VIP.</p>
+
+                <button class="tutorial-close" onclick="closeTutorial()">Começar a Usar →</button>
             </div>
         </div>
 
-        <h2 style="text-align: center; margin: 30px 0 15px 0; color: #00d9ff; font-size: 1.5rem;">
-            <span style="background: linear-gradient(135deg, #00738C 0%, #005a6e 100%); padding: 10px 30px; border-radius: 10px; border: 1px solid rgba(0, 115, 140, 0.5); box-shadow: 0 0 15px rgba(0, 115, 140, 0.3);">Parceiros</span>
-        </h2>
-        <div class="advertising">
-            <div class="ad-space" id="ad1">
-                <img src="parceiro 1.jpg" alt="Parceiro 1" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            </div>
-            <div class="ad-space" id="ad2">
-                <img src="parceiro22.jpg" alt="Parceiro 2" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            </div>
-            <div class="ad-space" id="ad3">
-                <img src="banner3.png" alt="Parceiro 3">
-            </div>
-            <div class="ad-space" id="ad5">
-                <img src="vni3.png" alt="Parceiro 5" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            </div>
-            <div class="ad-space" id="ad6">
-                <img src="parceiro6.png" alt="Parceiro 6" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            </div>
-            <div class="ad-space" id="ad7">
-                <img src="parceiro7.png" alt="Parceiro 7" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2026 Guia Local</p>
-            <a href="https://www.instagram.com/lugares.santafedosul/" target="_blank" class="partner-btn" style="margin-top: 10px;">Conheça nosso instagram</a>
-        </footer>
     </div>
 
+    <!-- App Logic Script -->
     <script>
-        const cityCenter = { lat: -20.1072, lng: -50.7100 };
-        let currentQuery = '';
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Remove active classes
+            document.querySelectorAll('.app-screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
 
+            // Set active class on target screen and navigation item
+            const targetScreen = document.getElementById(`screen-${tabId}`);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+
+            // Find correct tab button based on onclick string
+            const buttons = document.querySelectorAll('.nav-item');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(tabId)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Scroll body back to top on tab change
+            document.querySelector('.app-body').scrollTop = 0;
+        }
+
+        // Search & API Mock logic
         function searchPlaces() {
             const searchInput = document.getElementById('searchInput');
             const searchQuery = searchInput.value.trim();
@@ -737,15 +1093,20 @@
                 return;
             }
 
-            document.getElementById('searchMessage').style.display = 'block';
-            currentQuery = searchQuery;
+            // Update map in maps tab dynamically
             updateMap(searchQuery);
             displayResults(searchQuery);
         }
 
         function searchCategory(category) {
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.closest('.category-btn').classList.add('active');
+            // Remove selection state from all elements first
+            document.querySelectorAll('.category-item').forEach(btn => btn.classList.remove('active'));
+            
+            // Add active visual state
+            const clickedElement = event.currentTarget;
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
             
             document.getElementById('searchInput').value = category;
             searchPlaces();
@@ -755,53 +1116,95 @@
             const mapFrame = document.getElementById('map-frame');
             const encodedQuery = encodeURIComponent(`${query}, Santa Fé do Sul, São Paulo, Brasil`);
             const embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29785.58743109234!2d-50.7453!3d-20.1072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x949097b5c8974855%3A0x4c2d2f8c1c8e4e8!2sSanta%20F%C3%A9%20do%20Sul%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1640000000000!5m2!1spt-BR!2sbr&iwloc=&q=${encodedQuery}`;
-            
             mapFrame.src = embedUrl;
         }
 
         function displayResults(query) {
-            const resultsGrid = document.getElementById('results-grid');
-            const resultsGridContent = document.getElementById('results-grid-content');
-            const resultsDiv = document.getElementById('results');
+            const resultsList = document.getElementById('results-list');
+            const headerTitle = document.getElementById('results-title-header');
             
-            resultsGrid.style.display = 'block';
-            resultsGridContent.innerHTML = '<div class="loading" style="text-align: center; padding: 20px; color: #00d9ff;">Buscando locais...</div>';
+            headerTitle.innerText = `Resultados para "${query}"`;
+            resultsList.innerHTML = `
+                <div class="results-status" style="color: var(--primary);">
+                    Buscando melhores opções na cidade...
+                </div>
+            `;
             
             setTimeout(() => {
                 const icons = ['📍', '🏪', '🍽️', '🏨', '🏥', '🛒', '⛽', '💊'];
                 const randomIcon = icons[Math.floor(Math.random() * icons.length)];
                 
-                resultsGridContent.innerHTML = `
-                    <div class="result-card" onclick="openInGoogleMaps('${query}')">
-                        <div class="result-card-icon">${randomIcon}</div>
-                        <h3>${query}</h3>
-                        <p>Santa Fé do Sul, SP</p>
-                        <p style="color: #00ff88; font-size: 0.8rem; margin-top: 8px;">Ver no mapa →</p>
+                resultsList.innerHTML = `
+                    <div class="result-card-premium" onclick="openInGoogleMaps('${query}')">
+                        <div class="result-card-header">
+                            <div class="result-info">
+                                <span class="result-tag">Local Destaque</span>
+                                <h3 class="result-title">${query} Principal</h3>
+                                <div class="result-meta">
+                                    <span class="result-rating">★ 4.9</span>
+                                    <span>• Santa Fé do Sul, SP</span>
+                                </div>
+                            </div>
+                            <span style="font-size: 1.5rem;">${randomIcon}</span>
+                        </div>
+                        <div class="result-actions" onclick="event.stopPropagation();">
+                            <a href="https://wa.me/message/FK22NAQD3VGQE1" target="_blank" class="action-icon-btn primary-btn">
+                                💬 WhatsApp
+                            </a>
+                            <button onclick="openInGoogleMaps('${query}')" class="action-icon-btn">
+                                🗺️ Ver Rota
+                            </button>
+                        </div>
                     </div>
-                    <div class="result-card" onclick="openInGoogleMaps('${query} próximo')">
-                        <div class="result-card-icon">📍</div>
-                        <h3>${query} próximo</h3>
-                        <p>Próximos resultados</p>
-                        <p style="color: #00ff88; font-size: 0.8rem; margin-top: 8px;">Ver no mapa →</p>
+
+                    <div class="result-card-premium" onclick="openInGoogleMaps('${query} próximo')">
+                        <div class="result-card-header">
+                            <div class="result-info">
+                                <span class="result-tag">Mais Próximo</span>
+                                <h3 class="result-title">${query} Centro</h3>
+                                <div class="result-meta">
+                                    <span class="result-rating">★ 4.7</span>
+                                    <span>• Centro da Cidade</span>
+                                </div>
+                            </div>
+                            <span style="font-size: 1.5rem;">📍</span>
+                        </div>
+                        <div class="result-actions" onclick="event.stopPropagation();">
+                            <a href="https://wa.me/message/FK22NAQD3VGQE1" target="_blank" class="action-icon-btn primary-btn">
+                                💬 Contato
+                            </a>
+                            <button onclick="openInGoogleMaps('${query} próximo')" class="action-icon-btn">
+                                🗺️ Ver Rota
+                            </button>
+                        </div>
                     </div>
-                    <div class="result-card" onclick="openInGoogleMaps('${query} Santa Fé do Sul')">
-                        <div class="result-card-icon">🗺️</div>
-                        <h3>${query} na região</h3>
-                        <p>Toda a cidade</p>
-                        <p style="color: #00ff88; font-size: 0.8rem; margin-top: 8px;">Ver no mapa →</p>
+
+                    <div class="result-card-premium" onclick="openInGoogleMaps('${query} Santa Fé do Sul')">
+                        <div class="result-card-header">
+                            <div class="result-info">
+                                <span class="result-tag">Recomendado</span>
+                                <h3 class="result-title">${query} Express</h3>
+                                <div class="result-meta">
+                                    <span class="result-rating">★ 4.8</span>
+                                    <span>• Região Urbana</span>
+                                </div>
+                            </div>
+                            <span style="font-size: 1.5rem;">✨</span>
+                        </div>
+                        <div class="result-actions" onclick="event.stopPropagation();">
+                            <button onclick="openInGoogleMaps('${query} Santa Fé do Sul')" class="action-icon-btn primary-btn" style="flex: 1 1 100%;">
+                                🗺️ Abrir Rota no Google Maps
+                            </button>
+                        </div>
                     </div>
                 `;
-                
-                resultsDiv.innerHTML = `
-                    <div class="result-item" onclick="openInGoogleMaps('${query}')">
-                        <h3>🔍 ${query}</h3>
-                        <p>Santa Fé do Sul, São Paulo</p>
-                        <p class="distance">Clique para ver no mapa</p>
-                    </div>
-                `;
-            }, 500);
+
+                // Auto navigate to Maps Tab to preview query
+                // switchTab('map'); // Optional: can keep user on home screen to see list
+            }, 600);
         }
 
+        // Action Handlers
         function openInGoogleMaps(query) {
             const encodedQuery = encodeURIComponent(`${query}, Santa Fé do Sul, São Paulo, Brasil`);
             window.open(`https://www.google.com/maps/search/${encodedQuery}`, '_blank');
@@ -811,6 +1214,7 @@
             window.open('https://m.uber.com/', '_blank');
         }
 
+        // Quick Search or Map options
         function openTaxi() {
             window.open('https://www.google.com/maps/search/taxi+Santa+F%C3%A9+do+Sul+SP', '_blank');
         }
@@ -819,17 +1223,24 @@
             window.open('https://www.google.com/maps/search/moto+taxi+Santa+F%C3%A9+do+Sul+SP', '_blank');
         }
 
+        // Search Input Key Listener
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 searchPlaces();
             }
         });
 
+        // Tutorial Overlay Logic
         function closeTutorial() {
             document.getElementById('tutorialOverlay').classList.add('hidden');
             localStorage.setItem('tutorialVisto', 'true');
         }
 
+        function reopenTutorial() {
+            document.getElementById('tutorialOverlay').classList.remove('hidden');
+        }
+
+        // Initialize Tutorial
         if (localStorage.getItem('tutorialVisto') === 'true') {
             document.getElementById('tutorialOverlay').classList.add('hidden');
         }
